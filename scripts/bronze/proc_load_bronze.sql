@@ -2,10 +2,10 @@
 ===============================================================================
 Stored Procedure: Load Bronze Layer (Source -> Bronze)
 ===============================================================================
-Mục đích kịch bản:
+Mục đích:
     Quy trình được lưu trữ này tải dữ liệu vào lược đồ 'bronze' từ các tệp CSV bên ngoài. 
     Nó thực hiện các hành động sau:
-    - Truncate các table trong trong lớp broze trước khi inster vào.
+    - Truncate các table trong trong lớp broze trước khi insert vào.
     - Sử dụng lệnh 'BULK INSERT' để tải dữ liệu từ Tệp csv vào table bronze.
 
 Thông số:
