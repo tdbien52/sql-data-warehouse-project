@@ -2,7 +2,7 @@
 ===============================================================================
 DDL Script: Create Bronze Tables
 ===============================================================================
-Mục đích kịch bản:
+Mục đích:
     Tập lệnh này tạo các bảng trong lược đồ 'Bronze', loại bỏ các bảng hiện có 
     nếu chúng đã tồn tại.
 	  Chạy tập lệnh này để xác định lại cấu trúc DDL của table 'Bronze'
