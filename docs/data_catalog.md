@@ -6,58 +6,67 @@ This document describes all dimension and fact tables used in the Data Warehouse
 
 ---
 
-# Dimension Tables
+## 1. dim_customer
+- **Purpose:** Stores customer details enriched with demographic and geographic data.
 
-## dim_customer
+### Columns
 
 | Column | Data Type | Description |
 |---------|-----------|-------------|
-| customer_key | INT | Surrogate Key |
-| customer_id | INT | Business Key from source system |
-| first_name | VARCHAR(50) | Customer first name |
-| last_name | VARCHAR(50) | Customer last name |
-| country | VARCHAR(50) | Customer country |
-| create_date | DATE | Record creation date |
+| customer_key | INT | Surrogate key uniquely identifying each customer record in the dimension table. |
+| customer_id | INT | Unique numerical identifier assigned to each customer. |
+| customer_number | NVARCHAR(50) | Alphanumeric identifier representing the customer, used for tracking and referencing. |
+| first_name | NVARCHAR(50) | The customer's first name, as recorded in the system. |
+| last_name | NVARCHAR(50) | The customer's last name or family name. |
+| country | NVARCHAR(50) | The country of residence for the customer (e.g., 'Australia'). |
+| marital_status | NVARCHAR(50) | The marital status of the customer (e.g., 'Married', 'Single'). |
+| gender | NVARCHAR(50) | The gender of the customer (e.g., 'Male', 'Female', 'n/a'). |
+| birthdate | DATE | The date of birth of the customer, formatted as YYYY-MM-DD (e.g., 1971-10-06). |
+| create_date | DATE | The date and time when the customer record was created in the system |
 
 ---
 
-## dim_product
+## 2. dim_products
+- **Purpose:** Provides information about the products and their attributes.
+
+### Columns
 
 | Column | Data Type | Description |
 |---------|-----------|-------------|
-| product_key | INT | Surrogate Key |
-| product_id | INT | Business Key |
-| product_name | VARCHAR(100) | Product name |
-| category | VARCHAR(50) | Product category |
-| brand | VARCHAR(50) | Product brand |
+| product_key | INT | Surrogate key uniquely identifying each product record in the product dimension table. |
+| product_id | INT | A unique identifier assigned to the product for internal tracking and referencing. |
+| product_number | NVARCHAR(50) | A structured alphanumeric code representing the product, often used for categorization or inventory. |
+| product_name | NVARCHAR(50) | Descriptive name of the product, including key details such as type, color, and size. |
+| category_id | NVARCHAR(50) | A unique identifier for the product's category, linking it to its high-level classification. |
+| category | NVARCHAR(50) | The broader classification of the product (e.g., Bikes, Components) to group related items. |
+| subcategory | NVARCHAR(50) | A more detailed classification of the product within the category, such as product type. |
+| maintenance_required | NVARCHAR(50) | Indicates whether the product requires maintenance (e.g., 'Yes', 'No'). |
+| cost | INT | The cost or base price of the product, measured in monetary units. |
+| product_line | NVARCHAR(50) | The specific product line or series to which the product belongs (e.g., Road, Mountain). |
+| start_date | DATE | The date when the product became available for sale or use. |
 
 ---
 
-## dim_date
+## 3. gold.fact_sales
 
-| Column | Data Type | Description |
-|---------|-----------|-------------|
-| date_key | INT | YYYYMMDD |
-| full_date | DATE | Calendar date |
-| day | INT | Day of month |
-| month | INT | Month |
-| quarter | INT | Quarter |
-| year | INT | Year |
+- **Purpose:** Stores transactional sales data for analytical purposes.
+- **Grain:** One record per product sold in an order.
+- **Primary Key:** `sales_key`
+- **Foreign Keys:** `product_key`, `customer_key`, `date_key`
 
----
+### Columns
 
-# Fact Tables
-
-## fact_sales
-
-| Column | Data Type | Description |
-|---------|-----------|-------------|
-| sales_key | BIGINT | Fact Primary Key |
-| customer_key | INT | FK → dim_customer |
-| product_key | INT | FK → dim_product |
-| date_key | INT | FK → dim_date |
-| quantity | INT | Quantity sold |
-| sales_amount | DECIMAL(18,2) | Total sales amount |
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| order_number | NVARCHAR(50) | Unique business identifier for each sales order. |
+| product_key | INT | Surrogate key referencing **gold.dim_products**. |
+| customer_key | INT | Surrogate key referencing **gold.dim_customers**. |
+| order_date | DATE | Date when the order was placed. |
+| shipping_date | DATE | Date when the order was shipped. |
+| due_date | DATE | Payment due date. |
+| sales_amount | DECIMAL(18,2) | Total sales amount for the order line. |
+| quantity | INT | Number of units sold. |
+| price | DECIMAL(18,2) | Unit selling price. |
 
 
 
