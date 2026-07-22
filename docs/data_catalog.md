@@ -50,9 +50,7 @@ This document describes all dimension and fact tables used in the Data Warehouse
 ## 3. gold.fact_sales
 
 - **Purpose:** Stores transactional sales data for analytical purposes.
-- **Grain:** One record per product sold in an order.
-- **Primary Key:** `sales_key`
-- **Foreign Keys:** `product_key`, `customer_key`, `date_key`
+- **Foreign Keys:** `product_key`, `customer_key`,
 
 ### Columns
 
@@ -64,9 +62,9 @@ This document describes all dimension and fact tables used in the Data Warehouse
 | order_date | DATE | Date when the order was placed. |
 | shipping_date | DATE | Date when the order was shipped. |
 | due_date | DATE | Payment due date. |
-| sales_amount | DECIMAL(18,2) | Total sales amount for the order line. |
+| sales_amount | INT | Total sales amount for the order line. |
 | quantity | INT | Number of units sold. |
-| price | DECIMAL(18,2) | Unit selling price. |
+| price | INT | Unit selling price. |
 
 
 
